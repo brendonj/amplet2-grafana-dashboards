@@ -1,0 +1,513 @@
+{
+  "__requires": [
+  {
+    "type": "grafana",
+    "id": "grafana",
+    "name": "Grafana",
+    "version": "7.5.6"
+  },
+  {
+    "type": "panel",
+    "id": "graph",
+    "name": "Graph",
+    "version": ""
+  },
+  {
+    "type": "datasource",
+    "id": "postgres",
+    "name": "amp-postgresql",
+    "version": "1.0.0"
+  },
+  {
+    "type": "panel",
+    "id": "stat",
+    "name": "Stat",
+    "version": ""
+  }
+  ],
+  "annotations": {
+    "list": [
+    {
+      "builtIn": 1,
+      "datasource": "-- Grafana --",
+      "enable": true,
+      "hide": true,
+      "iconColor": "rgba(0, 211, 255, 1)",
+      "name": "Annotations & Alerts",
+      "type": "dashboard"
+    }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 1,
+  "id": null,
+  "iteration": 1621405612793,
+  "links": [],
+  "panels": [
+  {
+    "collapsed": false,
+    "datasource": null,
+    "gridPos": {
+      "h": 1,
+      "w": 24,
+      "x": 0,
+      "y": 0
+    },
+    "id": 9,
+    "panels": [],
+    "repeat": "src",
+    "title": "$src to $dst",
+    "type": "row"
+  },
+  {
+    "datasource": null,
+    "fieldConfig": {
+      "defaults": {
+        "color": {
+          "mode": "thresholds"
+        },
+        "mappings": [],
+        "noValue": "No recent data",
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+          {
+            "color": "green",
+            "value": null
+          }
+          ]
+        },
+        "unit": "dateTimeFromNow"
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 2,
+      "w": 24,
+      "x": 0,
+      "y": 1
+    },
+    "id": 27,
+    "maxDataPoints": 1,
+    "options": {
+      "colorMode": "value",
+      "graphMode": "area",
+      "justifyMode": "auto",
+      "orientation": "auto",
+      "reduceOptions": {
+        "calcs": [
+          "lastNotNull"
+        ],
+        "fields": "/^lastseen$/",
+        "values": false
+      },
+      "text": {},
+      "textMode": "auto"
+    },
+    "pluginVersion": "7.5.6",
+    "targets": [
+    {
+      "groupBy": [
+      {
+        "params": [
+          "$__interval"
+        ],
+        "type": "time"
+      },
+      {
+        "params": [
+          "null"
+        ],
+        "type": "fill"
+      }
+      ],
+      "orderByTime": "ASC",
+      "policy": "default",
+      "query": "SELECT time as lastseen, last(\"duration\") FROM \"http\" ",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "table",
+      "select": [
+        [
+        {
+          "params": [
+            "value"
+          ],
+          "type": "field"
+        },
+        {
+          "params": [],
+          "type": "mean"
+        }
+        ]
+      ],
+      "tags": []
+    }
+    ],
+    "timeFrom": "24h",
+    "title": "Last Seen",
+    "type": "stat"
+  },
+  {
+    "aliasColors": {},
+    "bars": false,
+    "dashLength": 10,
+    "dashes": false,
+    "datasource": null,
+    "description": "",
+    "fieldConfig": {
+      "defaults": {},
+      "overrides": []
+    },
+    "fill": 1,
+    "fillGradient": 0,
+    "gridPos": {
+      "h": 7,
+      "w": 6,
+      "x": 0,
+      "y": 3
+    },
+    "hiddenSeries": false,
+    "id": 2,
+    "interval": "15m",
+    "legend": {
+      "avg": false,
+      "current": false,
+      "max": false,
+      "min": false,
+      "show": true,
+      "total": false,
+      "values": false
+    },
+    "lines": true,
+    "linewidth": 1,
+    "nullPointMode": "null",
+    "options": {
+      "alertThreshold": true
+    },
+    "percentage": false,
+    "pluginVersion": "7.5.6",
+    "pointradius": 2,
+    "points": false,
+    "renderer": "flot",
+    "repeat": "submetric",
+    "seriesOverrides": [],
+    "spaceLength": 10,
+    "stack": false,
+    "steppedLine": false,
+    "targets": [
+    {
+      "alias": "$tag_source-$tag_destination",
+      "groupBy": [
+      {
+        "params": [
+          "$__interval"
+        ],
+        "type": "time"
+      },
+      {
+        "params": [
+          "source"
+        ],
+        "type": "tag"
+      },
+      {
+        "params": [
+          "destination"
+        ],
+        "type": "tag"
+      },
+      {
+        "params": [
+          "null"
+        ],
+        "type": "fill"
+      }
+      ],
+      "measurement": "http",
+      "orderByTime": "ASC",
+      "policy": "default",
+      "query": "SELECT mean(/^$submetric$/) FROM \"http\" WHERE (\"source\" =~ /^$src$/ AND \"destination\" =~ /^$dst$/) AND $timeFilter GROUP BY time($__interval), \"source\", \"destination\" fill(null)",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "select": [
+        [
+        {
+          "params": [
+            "/^$submetric$/"
+          ],
+          "type": "field"
+        },
+        {
+          "params": [],
+          "type": "mean"
+        }
+        ]
+      ],
+      "tags": [
+      {
+        "key": "source",
+        "operator": "=~",
+        "value": "/^$src$/"
+      },
+      {
+        "condition": "AND",
+        "key": "destination",
+        "operator": "=~",
+        "value": "/^$dst$/"
+      }
+      ]
+    }
+    ],
+    "thresholds": [],
+    "timeFrom": null,
+    "timeRegions": [],
+    "timeShift": null,
+    "title": "$submetric",
+    "tooltip": {
+      "shared": true,
+      "sort": 0,
+      "value_type": "individual"
+    },
+    "type": "graph",
+    "xaxis": {
+      "buckets": null,
+      "mode": "time",
+      "name": null,
+      "show": true,
+      "values": []
+    },
+    "yaxes": [
+    {
+      "$$hashKey": "object:1225",
+      "format": "ms",
+      "label": null,
+      "logBase": 1,
+      "max": null,
+      "min": null,
+      "show": true
+    },
+    {
+      "$$hashKey": "object:1226",
+      "format": "short",
+      "label": null,
+      "logBase": 1,
+      "max": null,
+      "min": null,
+      "show": true
+    }
+    ],
+    "yaxis": {
+      "align": false,
+      "alignLevel": null
+    }
+  }
+  ],
+  "schemaVersion": 27,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+    {
+      "allValue": null,
+      "current": {},
+      "datasource": "amp-postgresql",
+      "definition": "SELECT member_ampname from sources;",
+      "description": null,
+      "error": null,
+      "hide": 0,
+      "includeAll": false,
+      "label": null,
+      "multi": true,
+      "name": "src",
+      "options": [],
+      "query": "SELECT member_ampname from sources;",
+      "refresh": 1,
+      "regex": "",
+      "skipUrlSync": false,
+      "sort": 0,
+      "tagValuesQuery": "SELECT member_ampname FROM member WHERE member_meshname='$tag';",
+      "tags": [
+      {
+        "selected": false,
+        "text": "nzamp"
+      },
+      {
+        "selected": false,
+        "text": "nzresidential"
+      }
+      ],
+      "tagsQuery": "SELECT mesh_name FROM mesh WHERE mesh_is_src=true;",
+      "type": "query",
+      "useTags": true
+    },
+    {
+      "allValue": null,
+      "current": {},
+      "datasource": "amp-postgresql",
+      "definition": "SELECT member_ampname from destinations;",
+      "description": null,
+      "error": null,
+      "hide": 0,
+      "includeAll": false,
+      "label": null,
+      "multi": true,
+      "name": "dst",
+      "options": [],
+      "query": "SELECT member_ampname from destinations;",
+      "refresh": 1,
+      "regex": "",
+      "skipUrlSync": false,
+      "sort": 0,
+      "tagValuesQuery": "SELECT member_ampname FROM member WHERE member_meshname='$tag';",
+      "tags": [
+      {
+        "text": "nzdns"
+      },
+      {
+        "text": "nzweb"
+      },
+      {
+        "text": "rir"
+      },
+      {
+        "text": "alldns"
+      },
+      {
+        "text": "nzisp"
+      },
+      {
+        "text": "cdn"
+      },
+      {
+        "text": "intweb"
+      },
+      {
+        "text": "rootdns"
+      },
+      {
+        "text": "pubdns"
+      },
+      {
+        "text": "google"
+      },
+      {
+        "text": "nzamp"
+      },
+      {
+        "text": "nzresidential"
+      },
+      {
+        "text": "nzbanks"
+      },
+      {
+        "text": "australia"
+      },
+      {
+        "text": "nzmirror"
+      },
+      {
+        "text": "http"
+      },
+      {
+        "text": "aws"
+      }
+      ],
+      "tagsQuery": "SELECT mesh_name FROM mesh WHERE mesh_is_dst=true;",
+      "type": "query",
+      "useTags": true
+    },
+    {
+      "allValue": null,
+      "current": {},
+      "datasource": "amp-postgresql",
+      "definition": "SELECT $dst;",
+      "description": null,
+      "error": null,
+      "hide": 2,
+      "includeAll": false,
+      "label": null,
+      "multi": true,
+      "name": "rawhost",
+      "options": [],
+      "query": "SELECT $dst;",
+      "refresh": 1,
+      "regex": "/(?:http:|https:)+\\/\\/([^\\s]+[\\w])/",
+      "skipUrlSync": false,
+      "sort": 0,
+      "tagValuesQuery": "",
+      "tags": [],
+      "tagsQuery": "",
+      "type": "query",
+      "useTags": false
+    },
+    {
+      "allValue": null,
+      "current": {
+        "selected": false,
+        "text": [
+          "duration",
+        "bytes",
+        "server_count",
+        "object_count"
+        ],
+        "value": [
+          "duration",
+        "bytes",
+        "server_count",
+        "object_count"
+        ]
+      },
+      "description": null,
+      "error": null,
+      "hide": 2,
+      "includeAll": true,
+      "label": null,
+      "multi": true,
+      "name": "submetric",
+      "options": [
+      {
+        "selected": false,
+        "text": "All",
+        "value": "$__all"
+      },
+      {
+        "selected": true,
+        "text": "duration",
+        "value": "duration"
+      },
+      {
+        "selected": true,
+        "text": "bytes",
+        "value": "bytes"
+      },
+      {
+        "selected": true,
+        "text": "server_count",
+        "value": "server_count"
+      },
+      {
+        "selected": true,
+        "text": "object_count",
+        "value": "object_count"
+      }
+      ],
+      "query": "duration,bytes,server_count,object_count",
+      "queryValue": "",
+      "skipUrlSync": false,
+      "type": "custom"
+    }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "HTTP details",
+  "uid": "_d7K5ItMz",
+  "version": 14
+}

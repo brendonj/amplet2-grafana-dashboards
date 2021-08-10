@@ -1,0 +1,44 @@
+apiVersion: 1
+
+datasources:
+  # <string, required> name of the datasource. Required
+  - name: amp-influxdb
+    # <string, required> datasource type. Required
+    type: influxdb
+    # <string, required> access mode. proxy or direct (Server or Browser in the UI). Required
+    access: proxy
+    # <int> org id. will default to orgId 1 if not specified
+    orgId: 1
+    # <string> custom UID which can be used to reference this datasource in other parts of the configuration, if not specified will be generated automatically
+    #uid: my_unique_uid
+    # <string> url
+    url: http://localhost:8086
+    # <string> database name, if used
+    database: amp
+    # <bool> allow users to edit datasources from the UI.
+    editable: true
+
+  # <string, required> name of the datasource. Required
+  - name: amp-postgresql
+    # <string, required> datasource type. Required
+    type: postgres
+    # <string, required> access mode. proxy or direct (Server or Browser in the UI). Required
+    access: proxy
+    # <int> org id. will default to orgId 1 if not specified
+    orgId: 1
+    # <string> custom UID which can be used to reference this datasource in other parts of the configuration, if not specified will be generated automatically
+    #uid: my_unique_uid
+    # <string> url
+    url: localhost:5432
+    # <string> database name, if used
+    database: ampmeta
+    # <bool> allow users to edit datasources from the UI.
+    editable: true
+    # <string> database user, if used
+    user: grafana
+    # <map> fields that will be converted to json and stored in json_data
+    jsonData:
+      sslmode: disable
+      postgresVersion: 1200
+    secureJsonData:
+      password: grafana

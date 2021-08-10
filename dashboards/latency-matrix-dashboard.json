@@ -1,0 +1,463 @@
+{
+  "__requires": [
+  {
+    "type": "panel",
+    "id": "dropbox-grallama-panel",
+    "name": "GraLLAMA",
+    "version": "0.1.2"
+  },
+  {
+    "type": "grafana",
+    "id": "grafana",
+    "name": "Grafana",
+    "version": "7.5.6"
+  },
+  {
+    "type": "datasource",
+    "id": "influxdb",
+    "name": "amp-influxdb",
+    "version": "1.0.0"
+  },
+  {
+    "type": "datasource",
+    "id": "postgres",
+    "name": "amp-postgresql",
+    "version": "1.0.0"
+  }
+  ],
+  "annotations": {
+    "list": [
+    {
+      "builtIn": 1,
+      "datasource": "-- Grafana --",
+      "enable": true,
+      "hide": true,
+      "iconColor": "rgba(0, 211, 255, 1)",
+      "name": "Annotations & Alerts",
+      "type": "dashboard"
+    }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": null,
+  "iteration": 1621293790645,
+  "links": [],
+  "panels": [
+  {
+    "aliasColors": {},
+    "baseuri": "/d/Ig7fdHcMk/icmp-dashboard",
+    "cacheTimeout": null,
+    "colorBackground": true,
+    "colorValue": false,
+    "colors": [
+      "#6ea009",
+    "#D38E02",
+    "#C86501",
+    "#BD3D01",
+    "#AD0000"
+    ],
+    "combine": {
+      "label": "Others",
+      "threshold": 0
+    },
+    "datasource": null,
+    "description": "Latency between pairs of sites",
+    "fieldConfig": {
+      "defaults": {},
+      "overrides": []
+    },
+    "fontSize": "60%",
+    "format": "µs",
+    "gridPos": {
+      "h": 14,
+      "w": 24,
+      "x": 0,
+      "y": 0
+    },
+    "healthCheckEnabled": false,
+    "healthCheckOperator": "<",
+    "healthCheckOperatorOptions": [
+    {
+      "$$hashKey": "object:15863",
+      "text": "<",
+      "value": "<"
+    },
+    {
+      "$$hashKey": "object:15864",
+      "text": ">=",
+      "value": ">="
+    },
+    {
+      "$$hashKey": "object:15865",
+      "text": "=",
+      "value": "="
+    }
+    ],
+    "healthCheckThreshold": null,
+    "hideTimeOverride": false,
+    "id": 2,
+    "interval": "",
+    "legend": {
+      "show": true,
+      "values": true
+    },
+    "legendType": "Under graph",
+    "links": [],
+    "maxDataPoints": 1,
+    "nullPointMode": "connected",
+    "pluginVersion": "7.1.5",
+    "replace1": "www\\.",
+    "replace2": "\\.amp\\.wand\\.net\\.nz",
+    "separator": "--",
+    "showSuffix": false,
+    "showUnits": false,
+    "showValue": false,
+    "strokeWidth": 1,
+    "targets": [
+    {
+      "alias": "$tag_source--$tag_destination",
+      "groupBy": [
+      {
+        "params": [
+          "$__interval"
+        ],
+        "type": "time"
+      },
+      {
+        "params": [
+          "source"
+        ],
+        "type": "tag"
+      },
+      {
+        "params": [
+          "destination"
+        ],
+        "type": "tag"
+      },
+      {
+        "params": [
+          "null"
+        ],
+        "type": "fill"
+      }
+      ],
+      "measurement": "latency",
+      "orderByTime": "ASC",
+      "policy": "default",
+      "query": "SELECT last(\"rtt\") FROM /^$metric$/ WHERE (\"source\" =~ /^$src$/ AND \"destination\" =~ /^$dst$/ AND \"test\" =~ /^$submetric$/ AND \"family\" =~ /^$family$/) AND $timeFilter GROUP BY time($__interval), \"source\", \"destination\" fill(null)",
+      "rawQuery": false,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "select": [
+        [
+        {
+          "params": [
+            "rtt"
+          ],
+          "type": "field"
+        },
+        {
+          "params": [],
+          "type": "last"
+        }
+        ]
+      ],
+      "tags": [
+      {
+        "key": "source",
+        "operator": "=~",
+        "value": "/^$src$/"
+      },
+      {
+        "condition": "AND",
+        "key": "destination",
+        "operator": "=~",
+        "value": "/^$dst$/"
+      },
+      {
+        "condition": "AND",
+        "key": "test",
+        "operator": "=~",
+        "value": "/^$submetric$/"
+      }
+      ]
+    }
+    ],
+    "thresholds": "100000,150000,150001,150002",
+    "timeFrom": null,
+    "timeShift": null,
+    "title": "Latency",
+    "tooltipHover": true,
+    "type": "dropbox-grallama-panel",
+    "valueName": "avg",
+    "valueNameOptions": [
+    {
+      "$$hashKey": "object:15858",
+      "text": "Min",
+      "value": "min"
+    },
+    {
+      "$$hashKey": "object:15859",
+      "text": "Max",
+      "value": "max"
+    },
+    {
+      "$$hashKey": "object:15860",
+      "text": "Average",
+      "value": "avg"
+    },
+    {
+      "$$hashKey": "object:15861",
+      "text": "Current",
+      "value": "current"
+    },
+    {
+      "$$hashKey": "object:15862",
+      "text": "Total",
+      "value": "total"
+    }
+    ],
+    "xAxisLabel": "To",
+    "yAxisLabel": "From"
+  }
+  ],
+  "refresh": false,
+  "schemaVersion": 27,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+    {
+      "allValue": null,
+      "current": {},
+      "datasource": "amp-postgresql",
+      "definition": "SELECT member_ampname FROM sources;",
+      "description": null,
+      "error": null,
+      "hide": 0,
+      "includeAll": false,
+      "label": null,
+      "multi": true,
+      "name": "src",
+      "options": [],
+      "query": "SELECT member_ampname FROM sources;",
+      "refresh": 1,
+      "regex": "",
+      "skipUrlSync": false,
+      "sort": 0,
+      "tagValuesQuery": "SELECT member_ampname FROM member WHERE member_meshname='$tag';",
+      "tags": [
+      {
+        "selected": true,
+        "text": "nzamp"
+      },
+      {
+        "text": "nzresidential"
+      }
+      ],
+      "tagsQuery": "SELECT mesh_name FROM mesh WHERE mesh_is_src=true;",
+      "type": "query",
+      "useTags": true
+    },
+    {
+      "allValue": null,
+      "current": {},
+      "datasource": "amp-postgresql",
+      "definition": "SELECT member_ampname FROM destinations;",
+      "description": null,
+      "error": null,
+      "hide": 0,
+      "includeAll": false,
+      "label": null,
+      "multi": true,
+      "name": "dst",
+      "options": [],
+      "query": "SELECT member_ampname FROM destinations;",
+      "refresh": 1,
+      "regex": "",
+      "skipUrlSync": false,
+      "sort": 0,
+      "tagValuesQuery": "SELECT member_ampname FROM member WHERE member_meshname='$tag';",
+      "tags": [
+      {
+        "selected": false,
+        "text": "nzdns"
+      },
+      {
+        "selected": false,
+        "text": "nzweb"
+      },
+      {
+        "selected": false,
+        "text": "rir"
+      },
+      {
+        "selected": false,
+        "text": "alldns"
+      },
+      {
+        "selected": false,
+        "text": "nzisp"
+      },
+      {
+        "selected": false,
+        "text": "cdn"
+      },
+      {
+        "selected": false,
+        "text": "intweb"
+      },
+      {
+        "selected": false,
+        "text": "rootdns"
+      },
+      {
+        "selected": false,
+        "text": "pubdns"
+      },
+      {
+        "selected": false,
+        "text": "google"
+      },
+      {
+        "selected": false,
+        "text": "nzamp"
+      },
+      {
+        "selected": false,
+        "text": "nzresidential"
+      },
+      {
+        "selected": false,
+        "text": "nzbanks"
+      },
+      {
+        "selected": false,
+        "text": "australia"
+      },
+      {
+        "selected": false,
+        "text": "nzmirror"
+      },
+      {
+        "selected": false,
+        "text": "http"
+      },
+      {
+        "selected": false,
+        "text": "aws"
+      }
+      ],
+      "tagsQuery": "SELECT mesh_name FROM mesh WHERE mesh_is_dst=true;",
+      "type": "query",
+      "useTags": true
+    },
+    {
+      "allValue": null,
+      "current": {
+        "selected": false,
+        "text": "latency",
+        "value": "latency"
+      },
+      "description": null,
+      "error": null,
+      "hide": 2,
+      "includeAll": false,
+      "label": null,
+      "multi": false,
+      "name": "metric",
+      "options": [
+      {
+        "selected": true,
+        "text": "latency",
+        "value": "latency"
+      }
+      ],
+      "query": "latency",
+      "queryValue": "",
+      "skipUrlSync": false,
+      "type": "custom"
+    },
+    {
+      "allValue": null,
+      "current": {},
+      "datasource": "amp-influxdb",
+      "definition": "",
+      "description": null,
+      "error": null,
+      "hide": 0,
+      "includeAll": false,
+      "label": null,
+      "multi": false,
+      "name": "submetric",
+      "options": [],
+      "query": "SHOW TAG VALUES FROM $metric WITH KEY=\"test\";",
+      "refresh": 1,
+      "regex": "",
+      "skipUrlSync": false,
+      "sort": 0,
+      "tagValuesQuery": "",
+      "tags": [],
+      "tagsQuery": "",
+      "type": "query",
+      "useTags": false
+    },
+    {
+      "allValue": null,
+      "current": {
+        "selected": false,
+        "text": "ipv4",
+        "value": "ipv4"
+      },
+      "description": null,
+      "error": null,
+      "hide": 2,
+      "includeAll": false,
+      "label": null,
+      "multi": false,
+      "name": "family",
+      "options": [
+      {
+        "selected": true,
+        "text": "ipv4",
+        "value": "ipv4"
+      },
+      {
+        "selected": false,
+        "text": "ipv6",
+        "value": "ipv6"
+      }
+      ],
+      "query": "ipv4, ipv6",
+      "queryValue": "",
+      "skipUrlSync": false,
+      "type": "custom"
+    }
+    ]
+  },
+  "time": {
+    "from": "now-3h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+    "10s",
+    "30s",
+    "1m",
+    "5m",
+    "15m",
+    "30m",
+    "1h",
+    "2h",
+    "1d"
+    ]
+  },
+  "timezone": "",
+  "title": "Latency Matrix",
+  "uid": "LILSHY5Gk",
+  "version": 8
+}

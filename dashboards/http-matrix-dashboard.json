@@ -1,0 +1,439 @@
+{
+  "__requires": [
+  {
+    "type": "panel",
+    "id": "dropbox-grallama-panel",
+    "name": "GraLLAMA",
+    "version": "0.1.2"
+  },
+  {
+    "type": "grafana",
+    "id": "grafana",
+    "name": "Grafana",
+    "version": "7.5.6"
+  },
+  {
+    "type": "datasource",
+    "id": "influxdb",
+    "name": "amp-influxdb",
+    "version": "1.0.0"
+  },
+  {
+    "type": "datasource",
+    "id": "postgres",
+    "name": "amp-postgresql",
+    "version": "1.0.0"
+  }
+  ],
+  "annotations": {
+    "list": [
+    {
+      "builtIn": 1,
+      "datasource": "-- Grafana --",
+      "enable": true,
+      "hide": true,
+      "iconColor": "rgba(0, 211, 255, 1)",
+      "name": "Annotations & Alerts",
+      "type": "dashboard"
+    }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": null,
+  "iteration": 1621400784721,
+  "links": [],
+  "panels": [
+  {
+    "aliasColors": {},
+    "baseuri": "/d/_d7K5ItMz/http-dashboard",
+    "cacheTimeout": null,
+    "colorBackground": true,
+    "colorValue": false,
+    "colors": [
+      "#6ea009",
+    "#D38E02",
+    "#C86501",
+    "#BD3D01",
+    "#AD0000"
+    ],
+    "combine": {
+      "label": "Others",
+      "threshold": 0
+    },
+    "datasource": null,
+    "description": "",
+    "fieldConfig": {
+      "defaults": {},
+      "overrides": []
+    },
+    "fontSize": "60%",
+    "format": "ms",
+    "gridPos": {
+      "h": 14,
+      "w": 23,
+      "x": 0,
+      "y": 0
+    },
+    "healthCheckEnabled": false,
+    "healthCheckOperator": "<",
+    "healthCheckOperatorOptions": [
+    {
+      "$$hashKey": "object:3424",
+      "text": "<",
+      "value": "<"
+    },
+    {
+      "$$hashKey": "object:3425",
+      "text": ">=",
+      "value": ">="
+    },
+    {
+      "$$hashKey": "object:3426",
+      "text": "=",
+      "value": "="
+    }
+    ],
+    "healthCheckThreshold": null,
+    "hideTimeOverride": false,
+    "id": 2,
+    "interval": "",
+    "legend": {
+      "show": true,
+      "values": true
+    },
+    "legendType": "Under graph",
+    "links": [],
+    "maxDataPoints": 1,
+    "nullPointMode": "connected",
+    "pluginVersion": "7.1.5",
+    "replace1": "www\\.",
+    "replace2": "\\.amp\\.wand\\.net\\.nz",
+    "separator": "--",
+    "showSuffix": false,
+    "showUnits": false,
+    "showValue": false,
+    "strokeWidth": 1,
+    "targets": [
+    {
+      "alias": "$tag_source--$tag_destination",
+      "groupBy": [
+      {
+        "params": [
+          "$__interval"
+        ],
+        "type": "time"
+      },
+      {
+        "params": [
+          "source"
+        ],
+        "type": "tag"
+      },
+      {
+        "params": [
+          "destination"
+        ],
+        "type": "tag"
+      },
+      {
+        "params": [
+          "null"
+        ],
+        "type": "fill"
+      }
+      ],
+      "measurement": "http",
+      "orderByTime": "ASC",
+      "policy": "default",
+      "query": "SELECT last(\"rtt\") FROM /^$metric$/ WHERE (\"source\" =~ /^$src$/ AND \"destination\" =~ /^$dst$/ AND \"test\" =~ /^$submetric$/ AND \"family\" =~ /^$family$/) AND $timeFilter GROUP BY time($__interval), \"source\", \"destination\" fill(null)",
+      "rawQuery": false,
+      "refId": "A",
+      "resultFormat": "time_series",
+      "select": [
+        [
+        {
+          "params": [
+            "duration"
+          ],
+          "type": "field"
+        },
+        {
+          "params": [],
+          "type": "last"
+        }
+        ]
+      ],
+      "tags": [
+      {
+        "key": "source",
+        "operator": "=~",
+        "value": "/^$src$/"
+      },
+      {
+        "condition": "AND",
+        "key": "destination",
+        "operator": "=~",
+        "value": "/^$dst$/"
+      }
+      ]
+    }
+    ],
+    "thresholds": "500,1000,2500,5000",
+    "timeFrom": null,
+    "timeShift": null,
+    "title": "HTTP",
+    "tooltipHover": true,
+    "type": "dropbox-grallama-panel",
+    "valueName": "avg",
+    "valueNameOptions": [
+    {
+      "$$hashKey": "object:3419",
+      "text": "Min",
+      "value": "min"
+    },
+    {
+      "$$hashKey": "object:3420",
+      "text": "Max",
+      "value": "max"
+    },
+    {
+      "$$hashKey": "object:3421",
+      "text": "Average",
+      "value": "avg"
+    },
+    {
+      "$$hashKey": "object:3422",
+      "text": "Current",
+      "value": "current"
+    },
+    {
+      "$$hashKey": "object:3423",
+      "text": "Total",
+      "value": "total"
+    }
+    ],
+    "xAxisLabel": "To",
+    "yAxisLabel": "From"
+  }
+  ],
+  "refresh": false,
+  "schemaVersion": 27,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+    {
+      "allValue": null,
+      "current": {},
+      "datasource": "amp-postgresql",
+      "definition": "SELECT member_ampname FROM sources;",
+      "description": null,
+      "error": null,
+      "hide": 0,
+      "includeAll": false,
+      "label": null,
+      "multi": true,
+      "name": "src",
+      "options": [],
+      "query": "SELECT member_ampname FROM sources;",
+      "refresh": 1,
+      "regex": "",
+      "skipUrlSync": false,
+      "sort": 0,
+      "tagValuesQuery": "SELECT member_ampname FROM member WHERE member_meshname='$tag';",
+      "tags": [
+      {
+        "text": "nzamp"
+      },
+      {
+        "text": "nzresidential"
+      }
+      ],
+      "tagsQuery": "SELECT mesh_name FROM mesh WHERE mesh_is_src=true;",
+      "type": "query",
+      "useTags": true
+    },
+    {
+      "allValue": null,
+      "current": {},
+      "datasource": "amp-postgresql",
+      "definition": "SELECT member_ampname FROM destinations;",
+      "description": null,
+      "error": null,
+      "hide": 0,
+      "includeAll": false,
+      "label": null,
+      "multi": true,
+      "name": "dst",
+      "options": [],
+      "query": "SELECT member_ampname FROM destinations;",
+      "refresh": 1,
+      "regex": "",
+      "skipUrlSync": false,
+      "sort": 0,
+      "tagValuesQuery": "SELECT member_ampname FROM member WHERE member_meshname='$tag';",
+      "tags": [
+      {
+        "text": "nzdns"
+      },
+      {
+        "text": "nzweb"
+      },
+      {
+        "text": "rir"
+      },
+      {
+        "text": "alldns"
+      },
+      {
+        "text": "nzisp"
+      },
+      {
+        "text": "cdn"
+      },
+      {
+        "text": "intweb"
+      },
+      {
+        "text": "rootdns"
+      },
+      {
+        "text": "pubdns"
+      },
+      {
+        "text": "google"
+      },
+      {
+        "text": "nzamp"
+      },
+      {
+        "text": "nzresidential"
+      },
+      {
+        "text": "nzbanks"
+      },
+      {
+        "text": "australia"
+      },
+      {
+        "text": "nzmirror"
+      },
+      {
+        "text": "http"
+      },
+      {
+        "text": "aws"
+      }
+      ],
+      "tagsQuery": "SELECT mesh_name FROM mesh WHERE mesh_is_dst=true;",
+      "type": "query",
+      "useTags": true
+    },
+    {
+      "allValue": null,
+      "current": {
+        "selected": false,
+        "text": "latency",
+        "value": "latency"
+      },
+      "description": null,
+      "error": null,
+      "hide": 2,
+      "includeAll": false,
+      "label": null,
+      "multi": false,
+      "name": "metric",
+      "options": [
+      {
+        "selected": true,
+        "text": "latency",
+        "value": "latency"
+      }
+      ],
+      "query": "latency",
+      "queryValue": "",
+      "skipUrlSync": false,
+      "type": "custom"
+    },
+    {
+      "allValue": null,
+      "current": {},
+      "datasource": "amp-influxdb",
+      "definition": "SHOW TAG VALUES FROM $metric WITH KEY=\"test\";",
+      "description": null,
+      "error": null,
+      "hide": 2,
+      "includeAll": false,
+      "label": null,
+      "multi": false,
+      "name": "submetric",
+      "options": [],
+      "query": "",
+      "refresh": 1,
+      "regex": "",
+      "skipUrlSync": false,
+      "sort": 0,
+      "tagValuesQuery": "",
+      "tags": [],
+      "tagsQuery": "",
+      "type": "query",
+      "useTags": false
+    },
+    {
+      "allValue": null,
+      "current": {
+        "selected": false,
+        "text": "ipv4",
+        "value": "ipv4"
+      },
+      "description": null,
+      "error": null,
+      "hide": 2,
+      "includeAll": false,
+      "label": null,
+      "multi": false,
+      "name": "family",
+      "options": [
+      {
+        "selected": true,
+        "text": "ipv4",
+        "value": "ipv4"
+      },
+      {
+        "selected": false,
+        "text": "ipv6",
+        "value": "ipv6"
+      }
+      ],
+      "query": "ipv4, ipv6",
+      "queryValue": "",
+      "skipUrlSync": false,
+      "type": "custom"
+    }
+    ]
+  },
+  "time": {
+    "from": "now-3h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+    "10s",
+    "30s",
+    "1m",
+    "5m",
+    "15m",
+    "30m",
+    "1h",
+    "2h",
+    "1d"
+    ]
+  },
+  "timezone": "",
+  "title": "HTTP Matrix",
+  "uid": "fP3ykU5Mz",
+  "version": 5
+}

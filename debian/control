@@ -1,0 +1,16 @@
+Source: amplet2-grafana-dashboards
+Section: net
+Priority: optional
+Maintainer: Brendon Jones <brendonj@waikato.ac.nz>
+Build-Depends: debhelper (>= 9.0.0)
+Standards-Version: 3.9.6
+Homepage: https://amp.wand.net.nz
+#Vcs-Git: https://github.com/wanduow/amplet2-grafana-dashboards.git
+#Vcs-Browser: https://github.com/wanduow/amplet2-grafana-dashboards
+
+Package: amplet2-grafana-dashboards
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Grafana dashboards for AMP
+ This package contains some useful default Grafana dashboards for the AMP
+ active measurement system.

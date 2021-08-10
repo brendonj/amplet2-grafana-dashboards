@@ -1,0 +1,456 @@
+{
+  "__requires": [
+  {
+    "type": "grafana",
+    "id": "grafana",
+    "name": "Grafana",
+    "version": "7.5.6"
+  },
+  {
+    "type": "panel",
+    "id": "graph",
+    "name": "Graph",
+    "version": ""
+  },
+  {
+    "type": "datasource",
+    "id": "influxdb",
+    "name": "amp-influxdb",
+    "version": "1.0.0"
+  },
+  {
+    "type": "panel",
+    "id": "stat",
+    "name": "Stat",
+    "version": ""
+  }
+  ],
+  "annotations": {
+    "list": [
+    {
+      "builtIn": 1,
+      "datasource": "-- Grafana --",
+      "enable": true,
+      "hide": true,
+      "iconColor": "rgba(0, 211, 255, 1)",
+      "name": "Annotations & Alerts",
+      "type": "dashboard"
+    }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": null,
+  "iteration": 1621397626821,
+  "links": [],
+  "panels": [
+  {
+    "datasource": null,
+    "fieldConfig": {
+      "defaults": {
+        "mappings": [],
+        "noValue": "No recent data",
+        "thresholds": {
+          "mode": "absolute",
+          "steps": [
+          {
+            "color": "green",
+            "value": null
+          }
+          ]
+        },
+        "unit": "dateTimeFromNow"
+      },
+      "overrides": []
+    },
+    "gridPos": {
+      "h": 2,
+      "w": 4,
+      "x": 0,
+      "y": 0
+    },
+    "id": 4,
+    "maxDataPoints": 1,
+    "options": {
+      "colorMode": "value",
+      "graphMode": "area",
+      "justifyMode": "auto",
+      "orientation": "auto",
+      "reduceOptions": {
+        "calcs": [
+          "lastNotNull"
+        ],
+        "fields": "/^foo$/",
+        "values": false
+      },
+      "text": {},
+      "textMode": "auto"
+    },
+    "pluginVersion": "7.5.6",
+    "targets": [
+    {
+      "groupBy": [
+      {
+        "params": [
+          "$__interval"
+        ],
+        "type": "time"
+      },
+      {
+        "params": [
+          "null"
+        ],
+        "type": "fill"
+      }
+      ],
+      "orderByTime": "ASC",
+      "policy": "default",
+      "query": "SELECT time as foo, last(\"rtt\") FROM \"latency\" ",
+      "rawQuery": true,
+      "refId": "A",
+      "resultFormat": "table",
+      "select": [
+        [
+        {
+          "params": [
+            "value"
+          ],
+          "type": "field"
+        },
+        {
+          "params": [],
+          "type": "mean"
+        }
+        ]
+      ],
+      "tags": []
+    }
+    ],
+    "timeFrom": "24h",
+    "timeShift": null,
+    "title": "Last Seen",
+    "type": "stat"
+  },
+  {
+    "collapsed": false,
+    "datasource": null,
+    "gridPos": {
+      "h": 1,
+      "w": 24,
+      "x": 0,
+      "y": 2
+    },
+    "id": 7,
+    "panels": [],
+    "repeat": "src",
+    "title": "$src to $dst",
+    "type": "row"
+  },
+  {
+    "aliasColors": {},
+    "bars": false,
+    "dashLength": 10,
+    "dashes": false,
+    "datasource": null,
+    "description": "",
+    "fieldConfig": {
+      "defaults": {},
+      "overrides": []
+    },
+    "fill": 1,
+    "fillGradient": 0,
+    "gridPos": {
+      "h": 7,
+      "w": 8,
+      "x": 0,
+      "y": 3
+    },
+    "hiddenSeries": false,
+    "id": 2,
+    "interval": "60s",
+    "legend": {
+      "avg": false,
+      "current": false,
+      "hideEmpty": true,
+      "max": false,
+      "min": false,
+      "show": true,
+      "total": false,
+      "values": false
+    },
+    "lines": true,
+    "linewidth": 1,
+    "links": [
+    {
+      "title": "TEST LINK $submetric",
+      "url": "foo?var-submetric=$submetric"
+    }
+    ],
+    "nullPointMode": "null",
+    "options": {
+      "alertThreshold": true
+    },
+    "percentage": false,
+    "pluginVersion": "7.5.6",
+    "pointradius": 2,
+    "points": false,
+    "renderer": "flot",
+    "repeat": "submetric",
+    "repeatDirection": "h",
+    "seriesOverrides": [],
+    "spaceLength": 10,
+    "stack": false,
+    "steppedLine": false,
+    "targets": [
+    {
+      "alias": "$tag_source-$tag_destination",
+      "groupBy": [
+      {
+        "params": [
+          "$__interval"
+        ],
+        "type": "time"
+      },
+      {
+        "params": [
+          "source"
+        ],
+        "type": "tag"
+      },
+      {
+        "params": [
+          "destination"
+        ],
+        "type": "tag"
+      },
+      {
+        "params": [
+          "test"
+        ],
+        "type": "tag"
+      },
+      {
+        "params": [
+          "null"
+        ],
+        "type": "fill"
+      }
+      ],
+      "measurement": "/^$metric$/",
+      "orderByTime": "ASC",
+      "policy": "default",
+      "refId": "A",
+      "resultFormat": "time_series",
+      "select": [
+        [
+        {
+          "params": [
+            "rtt"
+          ],
+          "type": "field"
+        },
+        {
+          "params": [],
+          "type": "mean"
+        }
+        ]
+      ],
+      "tags": [
+      {
+        "key": "source",
+        "operator": "=~",
+        "value": "/^$src$/"
+      },
+      {
+        "condition": "AND",
+        "key": "destination",
+        "operator": "=~",
+        "value": "/^$dst$/"
+      },
+      {
+        "condition": "AND",
+        "key": "test",
+        "operator": "=~",
+        "value": "/^$submetric$/"
+      }
+      ]
+    }
+    ],
+    "thresholds": [],
+    "timeFrom": null,
+    "timeRegions": [],
+    "timeShift": null,
+    "title": "$submetric $metric $src $dst",
+    "tooltip": {
+      "shared": true,
+      "sort": 0,
+      "value_type": "individual"
+    },
+    "type": "graph",
+    "xaxis": {
+      "buckets": null,
+      "mode": "time",
+      "name": null,
+      "show": true,
+      "values": []
+    },
+    "yaxes": [
+    {
+      "$$hashKey": "object:3197",
+      "format": "µs",
+      "label": null,
+      "logBase": 1,
+      "max": null,
+      "min": null,
+      "show": true
+    },
+    {
+      "$$hashKey": "object:3198",
+      "format": "short",
+      "label": null,
+      "logBase": 1,
+      "max": null,
+      "min": null,
+      "show": true
+    }
+    ],
+    "yaxis": {
+      "align": false,
+      "alignLevel": null
+    }
+  }
+  ],
+  "schemaVersion": 27,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+    {
+      "allValue": null,
+      "current": {},
+      "datasource": "amp-influxdb",
+      "definition": "SHOW TAG VALUES ON \"amp\" FROM \"latency\" WITH KEY=\"source\";",
+      "description": null,
+      "error": null,
+      "hide": 0,
+      "includeAll": true,
+      "label": null,
+      "multi": true,
+      "name": "src",
+      "options": [],
+      "query": "SHOW TAG VALUES ON \"amp\" FROM \"latency\" WITH KEY=\"source\";",
+      "refresh": 1,
+      "regex": "",
+      "skipUrlSync": false,
+      "sort": 0,
+      "tagValuesQuery": "",
+      "tags": [],
+      "tagsQuery": "",
+      "type": "query",
+      "useTags": false
+    },
+    {
+      "allValue": null,
+      "current": {},
+      "datasource": "amp-influxdb",
+      "definition": "SHOW TAG VALUES ON \"amp\" FROM \"latency\" WITH KEY=\"destination\";",
+      "description": null,
+      "error": null,
+      "hide": 0,
+      "includeAll": true,
+      "label": null,
+      "multi": true,
+      "name": "dst",
+      "options": [],
+      "query": "SHOW TAG VALUES ON \"amp\" FROM \"latency\" WITH KEY=\"destination\";",
+      "refresh": 1,
+      "regex": "",
+      "skipUrlSync": false,
+      "sort": 0,
+      "tagValuesQuery": "",
+      "tags": [],
+      "tagsQuery": "",
+      "type": "query",
+      "useTags": false
+    },
+    {
+      "allValue": null,
+      "current": {
+        "selected": false,
+        "text": "latency",
+        "value": "latency"
+      },
+      "description": null,
+      "error": null,
+      "hide": 2,
+      "includeAll": false,
+      "label": null,
+      "multi": false,
+      "name": "metric",
+      "options": [
+      {
+        "selected": true,
+        "text": "latency",
+        "value": "latency"
+      },
+      {
+        "selected": false,
+        "text": "http",
+        "value": "http"
+      }
+      ],
+      "query": "latency,http",
+      "queryValue": "",
+      "skipUrlSync": false,
+      "type": "custom"
+    },
+    {
+      "allValue": null,
+      "current": {},
+      "datasource": "amp-influxdb",
+      "definition": "SHOW TAG VALUES FROM $metric WITH KEY=\"test\" WHERE \"source\" =~ /$src/ AND \"destination\" =~ /$dst/;",
+      "description": null,
+      "error": null,
+      "hide": 0,
+      "includeAll": true,
+      "label": null,
+      "multi": true,
+      "name": "submetric",
+      "options": [],
+      "query": "SHOW TAG VALUES FROM $metric WITH KEY=\"test\" WHERE \"source\" =~ /$src/ AND \"destination\" =~ /$dst/;",
+      "refresh": 1,
+      "regex": "",
+      "skipUrlSync": false,
+      "sort": 0,
+      "tagValuesQuery": "",
+      "tags": [],
+      "tagsQuery": "",
+      "type": "query",
+      "useTags": false
+    }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+    "10s",
+    "30s",
+    "1m",
+    "5m",
+    "15m",
+    "30m",
+    "1h",
+    "2h",
+    "1d"
+    ]
+  },
+  "timezone": "",
+  "title": "icmp-dashboard-2",
+  "uid": "2NKjW85Mk",
+  "version": 1
+}
