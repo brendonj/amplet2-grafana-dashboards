@@ -46,7 +46,7 @@
   "links": [],
   "panels": [
   {
-    "datasource": null,
+    "datasource": "amp-influxdb",
     "fieldConfig": {
       "defaults": {
         "mappings": [],
@@ -134,7 +134,7 @@
   },
   {
     "collapsed": false,
-    "datasource": null,
+    "datasource": "amp-influxdb",
     "gridPos": {
       "h": 1,
       "w": 24,
@@ -152,7 +152,7 @@
     "bars": false,
     "dashLength": 10,
     "dashes": false,
-    "datasource": null,
+    "datasource": "amp-influxdb",
     "description": "",
     "fieldConfig": {
       "defaults": {},
@@ -450,7 +450,7 @@
     ]
   },
   "timezone": "",
-  "title": "icmp-dashboard-2",
+  "title": "Latency Details",
   "uid": "2NKjW85Mk",
   "version": 1
 }

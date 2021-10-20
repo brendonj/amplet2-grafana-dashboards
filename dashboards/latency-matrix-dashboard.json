@@ -2,7 +2,7 @@
   "__requires": [
   {
     "type": "panel",
-    "id": "dropbox-grallama-panel",
+    "id": "amplet2-grallama-panel",
     "name": "GraLLAMA",
     "version": "0.1.2"
   },
@@ -47,7 +47,7 @@
   "panels": [
   {
     "aliasColors": {},
-    "baseuri": "/d/Ig7fdHcMk/icmp-dashboard",
+    "baseuri": "/d/2NKjW85Mk/icmp-dashboard",
     "cacheTimeout": null,
     "colorBackground": true,
     "colorValue": false,
@@ -62,7 +62,7 @@
       "label": "Others",
       "threshold": 0
     },
-    "datasource": null,
+    "datasource": "amp-influxdb",
     "description": "Latency between pairs of sites",
     "fieldConfig": {
       "defaults": {},
@@ -191,7 +191,7 @@
     "timeShift": null,
     "title": "Latency",
     "tooltipHover": true,
-    "type": "dropbox-grallama-panel",
+    "type": "amplet2-grallama-panel",
     "valueName": "avg",
     "valueNameOptions": [
     {

@@ -2,7 +2,7 @@
   "__requires": [
   {
     "type": "panel",
-    "id": "dropbox-grallama-panel",
+    "id": "amplet2-grallama-panel",
     "name": "GraLLAMA",
     "version": "0.1.2"
   },
@@ -62,7 +62,7 @@
       "label": "Others",
       "threshold": 0
     },
-    "datasource": null,
+    "datasource": "amp-influxdb",
     "description": "",
     "fieldConfig": {
       "defaults": {},
@@ -185,7 +185,7 @@
     "timeShift": null,
     "title": "HTTP",
     "tooltipHover": true,
-    "type": "dropbox-grallama-panel",
+    "type": "amplet2-grallama-panel",
     "valueName": "avg",
     "valueNameOptions": [
     {

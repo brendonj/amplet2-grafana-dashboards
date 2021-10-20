@@ -47,7 +47,7 @@
   "panels": [
   {
     "collapsed": false,
-    "datasource": null,
+    "datasource": "amp-influxdb",
     "gridPos": {
       "h": 1,
       "w": 24,
@@ -61,7 +61,7 @@
     "type": "row"
   },
   {
-    "datasource": null,
+    "datasource": "amp-influxdb",
     "fieldConfig": {
       "defaults": {
         "color": {
@@ -154,7 +154,7 @@
     "bars": false,
     "dashLength": 10,
     "dashes": false,
-    "datasource": null,
+    "datasource": "amp-influxdb",
     "description": "",
     "fieldConfig": {
       "defaults": {},
