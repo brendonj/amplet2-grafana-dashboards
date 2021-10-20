@@ -10,7 +10,7 @@ Homepage: https://amp.wand.net.nz
 
 Package: amplet2-grafana-dashboards
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}
+Depends: ${shlibs:Depends}, ${misc:Depends}, grafana
 Description: Grafana dashboards for AMP
  This package contains some useful default Grafana dashboards for the AMP
  active measurement system.
