@@ -20,12 +20,21 @@ set -e
 
 case "$1" in
     configure)
+        # create the postgres database user if required - apparently
+        # grafana won't do ident authentication, so add a password
+        su postgres -c "psql -tAc \
+            \"SELECT 1 FROM pg_roles WHERE rolname='grafana'\" | grep -q 1 || psql -tAc \"CREATE USER grafana PASSWORD 'grafana'\""
+
+        # and make sure the grafana user can read the ampmeta database
+        su postgres -c "psql -d ampmeta -q -c \
+            \"GRANT SELECT ON ALL TABLES IN SCHEMA public TO \\\"grafana\\\";\" || true"
+
 	# restart grafana so it picks up the new dashboards
 	if [ -x "`which invoke-rc.d 2>/dev/null`" ]; then
-                invoke-rc.d grafana-server restart || exit $?
-            else
-                /etc/init.d/grafana-server restart || exit $?
-            fi
+            invoke-rc.d grafana-server restart || exit $?
+        else
+            /etc/init.d/grafana-server restart || exit $?
+        fi
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
