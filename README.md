@@ -12,7 +12,6 @@ dashboard management page, and upload the appropriate json file.
 
 Alternatively, prebuilt Debian/Ubuntu packages are hosted by
 [Cloudsmith](https://cloudsmith.io/~wand/repos/amp/packages/).
-```
 
 See also:
 - [amplet2](https://github.com/wanduow/amplet2) - Client that performs tests and reports measurements.
